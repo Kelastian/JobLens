@@ -1,0 +1,72 @@
+# ---- JobLens: notas privadas (español, estilo profesor) ----
+# Explican el "cómo" y el "porqué" de cada archivo/grupo pero
+# NO deben subir a GitHub (el repo público está en inglés).
+*.notas.md
+
+# ---- .NET / Visual Studio standard ----
+bin/
+obj/
+out/
+
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+.vs/
+.vscode/*
+!.vscode/extensions.json
+
+# Rider
+.idea/
+*.sln.iml
+
+# Build results
+[Dd]ebug/
+[Dd]ebug[Pp]ublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+nuget.config.user
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# Publish / self-contained output
+publish/
+*.pubxml.user
+
+# ---- JobLens-specific ----
+# SQLite database created at runtime — not a fixture, not source.
+*.db
+*.db-shm
+*.db-wal
+joblens.db*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Misc
+*.log
+*.tmp
