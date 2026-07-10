@@ -1,8 +1,8 @@
+using JobLens.Application.Languages;
 using JobLens.Domain.Enums;
-using JobLens.Infrastructure.Languages;
 using Xunit;
 
-namespace JobLens.Infrastructure.Tests.Languages;
+namespace JobLens.Application.Tests.Languages;
 
 public class LanguageDetectorTests
 {

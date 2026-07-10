@@ -100,7 +100,11 @@ JobLens.sln
 │  ├─ JobLens.Application         (net10.0)    ← use cases
 │  │   ├─ Analysis/               AnalysisService — orchestrates fetch → LLM → persist
 │  │   ├─ Prompts/                PromptBuilder — trilingual, per-language templates
-│  │   └─ Matching/               MatchScorer — invokes LLM, validates the JSON returned
+│  │   ├─ Matching/               MatchScorer — invokes LLM, validates the JSON returned
+│  │   └─ Languages/              LanguageDetector — heuristic (hiragana/katakana ratio,
+│  │                              Spanish diacritics), no external service. Lives here
+│  │                              (not Infrastructure) because AnalysisService calls it
+│  │                              directly and Application cannot depend on Infrastructure
 │  │
 │  ├─ JobLens.Infrastructure      (net10.0)    ← implementations
 │  │   ├─ Llm/
@@ -108,9 +112,7 @@ JobLens.sln
 │  │   │   ├─ GroqProvider        ILlmProvider — Groq (Llama 3.3 70B) fallback
 │  │   │   └─ ResilientLlmClient  wraps a primary + fallback, handles retries
 │  │   ├─ Scraping/               HtmlJobFetcher — HttpClient + AngleSharp
-│  │   ├─ Persistence/            EF Core SQLite context + AnalysisRepository
-│  │   └─ Languages/              LanguageDetector — heuristic (hiragana/katakana ratio,
-│  │                              Spanish diacritics), no external service
+│  │   └─ Persistence/            EF Core SQLite context + AnalysisRepository
 │  │
 │  └─ JobLens.Web                 (net10.0, Blazor Server) ← UI + composition root
 │      ├─ Pages/                  Home, Analyze, History, ProfileEditor

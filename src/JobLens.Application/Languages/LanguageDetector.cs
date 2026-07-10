@@ -1,6 +1,6 @@
 using JobLens.Domain.Enums;
 
-namespace JobLens.Infrastructure.Languages;
+namespace JobLens.Application.Languages;
 
 /// <summary>
 /// Detects whether a job posting's text is Japanese, Spanish, or English using
