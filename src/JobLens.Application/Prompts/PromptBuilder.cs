@@ -64,8 +64,8 @@ public sealed class PromptBuilder
             Reglas importantes:
             - "summary" debe estar escrito en ESPAÑOL, sin importar el idioma original de la oferta.
             - "techStack" es una lista de tecnologías tal como aparecen en la oferta (podés mantener nombres propios como "React" o "AWS" sin traducir).
-            - Los valores de "seniority", "workStyle", "japaneseLevel" y "englishLevel" deben ser EXACTAMENTE uno de los valores permitidos en inglés listados en el schema — no los traduzcas.
-            - "japaneseLevelRawText" y "englishLevelRawText" deben conservar la frase textual original de la oferta (en el idioma original), o null si la oferta no menciona ese idioma.
+            - Los valores de "seniority", "workStyle", "japaneseRequired.level" y "englishRequired.level" deben ser EXACTAMENTE uno de los valores permitidos en inglés listados en el schema — no los traduzcas.
+            - "japaneseRequired.rawText" y "englishRequired.rawText" deben conservar la frase textual original de la oferta (en el idioma original), o null si la oferta no menciona ese idioma.
             - Si un dato no aparece en la oferta, usá null (para strings/números) o "NotSpecified" (para los enums), nunca inventes un valor.
 
             Texto de la oferta:
@@ -89,8 +89,8 @@ public sealed class PromptBuilder
             Important rules:
             - "summary" must be written in ENGLISH, regardless of the posting's original language.
             - "techStack" is a list of technologies as they appear in the posting (proper nouns like "React" or "AWS" can stay as-is).
-            - The values of "seniority", "workStyle", "japaneseLevel", and "englishLevel" must be EXACTLY one of the allowed English values listed in the schema — do not translate them.
-            - "japaneseLevelRawText" and "englishLevelRawText" must preserve the original wording from the posting (in its original language), or null if that language isn't mentioned.
+            - The values of "seniority", "workStyle", "japaneseRequired.level", and "englishRequired.level" must be EXACTLY one of the allowed English values listed in the schema — do not translate them.
+            - "japaneseRequired.rawText" and "englishRequired.rawText" must preserve the original wording from the posting (in its original language), or null if that language isn't mentioned.
             - If a field isn't present in the posting, use null (for strings/numbers) or "NotSpecified" (for enums) — never invent a value.
 
             Posting text:
@@ -114,8 +114,8 @@ public sealed class PromptBuilder
             重要なルール：
             - "summary" は、求人票の元の言語に関わらず、必ず日本語で記述してください。
             - "techStack" は求人票に記載された技術名のリストです（"React" や "AWS" のような固有名詞はそのままで構いません）。
-            - "seniority"、"workStyle"、"japaneseLevel"、"englishLevel" の値は、スキーマに記載された英語の許容値のいずれかと完全に一致させてください（翻訳しないこと）。
-            - "japaneseLevelRawText" と "englishLevelRawText" には、求人票に書かれた元の表現（元の言語のまま）を保持してください。該当する記載がなければ null にしてください。
+            - "seniority"、"workStyle"、"japaneseRequired.level"、"englishRequired.level" の値は、スキーマに記載された英語の許容値のいずれかと完全に一致させてください（翻訳しないこと）。
+            - "japaneseRequired.rawText" と "englishRequired.rawText" には、求人票に書かれた元の表現（元の言語のまま）を保持してください。該当する記載がなければ null にしてください。
             - 求人票に記載がない項目は、null（文字列・数値の場合）または "NotSpecified"（enumの場合）としてください。情報を推測して補わないでください。
 
             求人票の本文：
@@ -209,10 +209,14 @@ public sealed class PromptBuilder
           "techStack": string[],
           "seniority": "NotSpecified" | "Intern" | "NewGrad" | "Junior" | "MidLevel" | "Senior" | "Lead",
           "minYearsExperience": number | null,
-          "japaneseLevel": "NotSpecified" | "None" | "N5" | "N4" | "N3" | "N2" | "N1",
-          "japaneseLevelRawText": string | null,
-          "englishLevel": "NotSpecified" | "None" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2",
-          "englishLevelRawText": string | null,
+          "japaneseRequired": {
+            "level": "NotSpecified" | "None" | "N5" | "N4" | "N3" | "N2" | "N1",
+            "rawText": string | null
+          },
+          "englishRequired": {
+            "level": "NotSpecified" | "None" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2",
+            "rawText": string | null
+          },
           "workStyle": "NotSpecified" | "Onsite" | "Hybrid" | "Remote",
           "salaryRange": string | null,
           "visaSponsorshipMentioned": boolean,

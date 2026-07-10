@@ -9,7 +9,7 @@ public interface IJobPostingFetcher
 {
     /// <summary>
     /// Downloads and extracts the visible text content of the posting at
-    /// <paramref name="url"/>. Throws JobFetchException (Application layer)
+    /// <paramref name="url"/>. Throws JobFetchException (Domain.Exceptions)
     /// if the page can't be reached or no meaningful text can be extracted —
     /// e.g. a JavaScript-rendered page with no server-side HTML content.
     /// </summary>

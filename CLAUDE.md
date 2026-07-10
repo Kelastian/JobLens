@@ -92,13 +92,15 @@ JobLens.sln
 │  │   ├─ Models/                 JobPosting, ExtractedRequirements, UserProfile,
 │  │   │                          MatchResult, AnalysisRecord
 │  │   ├─ Enums/                  Language (Es, En, Ja), WorkStyle, SeniorityLevel
-│  │   └─ Abstractions/           ILlmProvider, IJobPostingFetcher, IAnalysisRepository
+│  │   ├─ Abstractions/           ILlmProvider, IJobPostingFetcher, IAnalysisRepository
+│  │   └─ Exceptions/             LlmResponseException, JobFetchException — live here,
+│  │                              not in Application, so Infrastructure (which throws
+│  │                              them) can reference them without depending on Application
 │  │
 │  ├─ JobLens.Application         (net10.0)    ← use cases
 │  │   ├─ Analysis/               AnalysisService — orchestrates fetch → LLM → persist
 │  │   ├─ Prompts/                PromptBuilder — trilingual, per-language templates
-│  │   ├─ Matching/               MatchScorer — invokes LLM, validates the JSON returned
-│  │   └─ Exceptions/             LlmResponseException, JobFetchException, etc.
+│  │   └─ Matching/               MatchScorer — invokes LLM, validates the JSON returned
 │  │
 │  ├─ JobLens.Infrastructure      (net10.0)    ← implementations
 │  │   ├─ Llm/

@@ -1,4 +1,4 @@
-namespace JobLens.Application.Exceptions;
+namespace JobLens.Domain.Exceptions;
 
 /// <summary>
 /// Thrown when an IJobPostingFetcher cannot retrieve usable text from a URL —

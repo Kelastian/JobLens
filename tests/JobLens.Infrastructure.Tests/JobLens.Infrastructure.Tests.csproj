@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\JobLens.Infrastructure\JobLens.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Llm\Fixtures\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,16 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "Sorry, I can't help with that request."
+          }
+        ]
+      },
+      "finishReason": "STOP",
+      "safetyRatings": []
+    }
+  ]
+}

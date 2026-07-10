@@ -1,0 +1,22 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "role": "model",
+        "parts": [
+          {
+            "text": "{\"techStack\":[\"React\",\"TypeScript\"],\"seniority\":\"Junior\",\"minYearsExperience\":3,\"japaneseRequired\":{\"level\":\"N2\",\"rawText\":\"日本語能力試験N2以上\"},\"englishRequired\":{\"level\":\"B2\",\"rawText\":null},\"workStyle\":\"Hybrid\",\"salaryRange\":\"500-700万円\",\"visaSponsorshipMentioned\":true,\"summary\":\"求人の要約\"}"
+          }
+        ]
+      },
+      "finishReason": "STOP",
+      "safetyRatings": []
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 120,
+    "candidatesTokenCount": 85,
+    "totalTokenCount": 205
+  },
+  "modelVersion": "gemini-2.5-flash"
+}
