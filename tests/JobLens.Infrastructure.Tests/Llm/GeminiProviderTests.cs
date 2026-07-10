@@ -3,6 +3,7 @@ using JobLens.Domain.Enums;
 using JobLens.Domain.Exceptions;
 using JobLens.Domain.Models;
 using JobLens.Infrastructure.Llm;
+using JobLens.Infrastructure.Tests.TestSupport;
 using Microsoft.Extensions.Options;
 using Xunit;
 

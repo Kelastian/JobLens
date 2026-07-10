@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Include="Llm\Fixtures\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="Scraping\Fixtures\*.html" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
