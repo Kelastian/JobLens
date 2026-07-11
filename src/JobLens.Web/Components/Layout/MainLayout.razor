@@ -1,6 +1,17 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
-@Body
+<div class="page">
+    <nav class="top-nav">
+        <NavLink href="/" Match="NavLinkMatch.All">Home</NavLink>
+        <NavLink href="/analyze">Analyze</NavLink>
+        <NavLink href="/history">History</NavLink>
+        <NavLink href="/profile">Profile</NavLink>
+    </nav>
+
+    <main>
+        @Body
+    </main>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.

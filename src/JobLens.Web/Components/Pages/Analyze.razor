@@ -1,0 +1,97 @@
+@page "/analyze"
+@using JobLens.Application.Analysis
+@using JobLens.Domain.Abstractions
+@using JobLens.Domain.Exceptions
+@using JobLens.Web.Components.Shared
+@inject AnalysisService AnalysisService
+@inject IUserProfileStore ProfileStore
+
+<PageTitle>Analyze</PageTitle>
+
+<h1>Analyze a job posting</h1>
+
+<div class="field">
+    <label>Input type</label>
+    <select @bind="_inputMode">
+        <option value="@InputMode.Text">Paste text</option>
+        <option value="@InputMode.Url">Paste URL</option>
+    </select>
+</div>
+
+@if (_inputMode == InputMode.Text)
+{
+    <div class="field">
+        <label for="posting-text">Job posting text</label>
+        <textarea id="posting-text" rows="10" @bind="_postingText" placeholder="Paste the job posting text here..."></textarea>
+    </div>
+}
+else
+{
+    <div class="field">
+        <label for="posting-url">Job posting URL</label>
+        <input id="posting-url" type="text" @bind="_postingUrl" placeholder="https://..." />
+    </div>
+}
+
+<div class="field">
+    <label for="output-language">Output language</label>
+    <select id="output-language" @bind="_outputLanguage">
+        <option value="@Language.En">English</option>
+        <option value="@Language.Es">Español</option>
+        <option value="@Language.Ja">日本語</option>
+    </select>
+</div>
+
+<button @onclick="RunAnalysisAsync" disabled="@_isAnalyzing">
+    @(_isAnalyzing ? "Analyzing..." : "Analyze")
+</button>
+
+@if (_errorMessage is not null)
+{
+    <div class="error-box">@_errorMessage</div>
+}
+
+@if (_result is not null)
+{
+    <AnalysisResultView Record="_result" />
+}
+
+@code {
+    private enum InputMode { Text, Url }
+
+    private InputMode _inputMode = InputMode.Text;
+    private string _postingText = string.Empty;
+    private string _postingUrl = string.Empty;
+    private Language _outputLanguage = Language.En;
+    private bool _isAnalyzing;
+    private string? _errorMessage;
+    private AnalysisRecord? _result;
+
+    private async Task RunAnalysisAsync()
+    {
+        _errorMessage = null;
+        _result = null;
+        _isAnalyzing = true;
+
+        try
+        {
+            var profile = await ProfileStore.LoadAsync();
+
+            _result = _inputMode == InputMode.Text
+                ? await AnalysisService.AnalyzeTextAsync(_postingText, _outputLanguage, profile)
+                : await AnalysisService.AnalyzeUrlAsync(_postingUrl, _outputLanguage, profile);
+        }
+        catch (JobFetchException ex)
+        {
+            _errorMessage = $"Could not read that URL: {ex.Message}";
+        }
+        catch (LlmResponseException ex)
+        {
+            _errorMessage = $"The AI analysis failed: {ex.Message}";
+        }
+        finally
+        {
+            _isAnalyzing = false;
+        }
+    }
+}

@@ -1,0 +1,53 @@
+@page "/history"
+@using JobLens.Domain.Abstractions
+@using JobLens.Web.Components.Shared
+@inject IAnalysisRepository AnalysisRepository
+
+<PageTitle>History</PageTitle>
+
+<h1>Analysis history</h1>
+
+@if (_records is null)
+{
+    <p>Loading...</p>
+}
+else if (_records.Count == 0)
+{
+    <p>No analyses saved yet. Go to <a href="/analyze">Analyze</a> to run your first one.</p>
+}
+else
+{
+    <div class="field">
+        <label for="history-select">Saved analyses (newest first)</label>
+        <select id="history-select" @bind="_selectedId">
+            <option value="">— Select an analysis —</option>
+            @foreach (var record in _records)
+            {
+                <option value="@record.Id">
+                    @record.CreatedAt.ToLocalTime().ToString("g") — @Truncate(record.Requirements.Summary, 60)
+                </option>
+            }
+        </select>
+    </div>
+
+    @if (_selected is not null)
+    {
+        <AnalysisResultView Record="_selected" />
+    }
+}
+
+@code {
+    private IReadOnlyList<AnalysisRecord>? _records;
+    private string _selectedId = string.Empty;
+
+    private AnalysisRecord? _selected =>
+        _records?.FirstOrDefault(r => r.Id.ToString() == _selectedId);
+
+    protected override async Task OnInitializedAsync()
+    {
+        _records = await AnalysisRepository.GetAllAsync();
+    }
+
+    private static string Truncate(string text, int maxLength) =>
+        text.Length <= maxLength ? text : text[..maxLength] + "…";
+}

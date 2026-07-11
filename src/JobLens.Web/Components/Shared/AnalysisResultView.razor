@@ -1,0 +1,81 @@
+@if (Record is not null)
+{
+    <div class="result-card">
+        <h2>Summary</h2>
+        <p>@Record.Requirements.Summary</p>
+    </div>
+
+    <div class="result-card">
+        <h2>Match score <span class="score-badge">@Record.Match.Score</span></h2>
+
+        <h3>Strengths</h3>
+        <ul>
+            @foreach (var strength in Record.Match.Strengths)
+            {
+                <li>@strength</li>
+            }
+        </ul>
+
+        <h3>Gaps</h3>
+        <ul>
+            @foreach (var gap in Record.Match.Gaps)
+            {
+                <li>@gap</li>
+            }
+        </ul>
+
+        <h3>Suggestions</h3>
+        <ul>
+            @foreach (var suggestion in Record.Match.Suggestions)
+            {
+                <li>@suggestion</li>
+            }
+        </ul>
+    </div>
+
+    <div class="result-card">
+        <h2>Extracted requirements</h2>
+        <dl>
+            <dt>Tech stack</dt>
+            <dd>@string.Join(", ", Record.Requirements.TechStack)</dd>
+
+            <dt>Seniority</dt>
+            <dd>@Record.Requirements.Seniority</dd>
+
+            <dt>Minimum years of experience</dt>
+            <dd>@(Record.Requirements.MinYearsExperience?.ToString() ?? "Not specified")</dd>
+
+            <dt>Japanese level required</dt>
+            <dd>
+                @Record.Requirements.JapaneseRequired.Level
+                @if (Record.Requirements.JapaneseRequired.RawText is { } jaRawText)
+                {
+                    <text> (@jaRawText)</text>
+                }
+            </dd>
+
+            <dt>English level required</dt>
+            <dd>
+                @Record.Requirements.EnglishRequired.Level
+                @if (Record.Requirements.EnglishRequired.RawText is { } enRawText)
+                {
+                    <text> (@enRawText)</text>
+                }
+            </dd>
+
+            <dt>Work style</dt>
+            <dd>@Record.Requirements.WorkStyle</dd>
+
+            <dt>Salary range</dt>
+            <dd>@(Record.Requirements.SalaryRange ?? "Not specified")</dd>
+
+            <dt>Visa sponsorship mentioned</dt>
+            <dd>@(Record.Requirements.VisaSponsorshipMentioned ? "Yes" : "No")</dd>
+        </dl>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required AnalysisRecord Record { get; set; }
+}

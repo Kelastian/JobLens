@@ -11,5 +11,5 @@ public sealed class GeminiOptions
 
     public required string ApiKey { get; init; }
 
-    public string Model { get; init; } = "gemini-2.5-flash";
+    public string Model { get; init; } = "gemini-3.5-flash";
 }

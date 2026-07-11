@@ -1,0 +1,131 @@
+@page "/profile"
+@using JobLens.Domain.Abstractions
+@inject IUserProfileStore ProfileStore
+
+<PageTitle>Profile</PageTitle>
+
+<h1>Your profile</h1>
+<p>Used to score how well a job posting matches you. Edit any field and save.</p>
+
+@if (_model is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="_model" OnValidSubmit="SaveAsync">
+        <div class="field">
+            <label for="full-name">Full name</label>
+            <InputText id="full-name" @bind-Value="_model.FullName" />
+        </div>
+
+        <div class="field">
+            <label for="tech-stack">Tech stack (comma-separated)</label>
+            <InputText id="tech-stack" @bind-Value="_model.TechStackCsv" />
+        </div>
+
+        <div class="field">
+            <label for="years">Years of experience</label>
+            <InputNumber id="years" @bind-Value="_model.YearsOfExperience" />
+        </div>
+
+        <div class="field">
+            <label for="ja-level">Japanese level</label>
+            <InputSelect id="ja-level" @bind-Value="_model.JapaneseLevel">
+                @foreach (var level in Enum.GetValues<JapaneseLevel>())
+                {
+                    <option value="@level">@level</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="field">
+            <label for="en-level">English level</label>
+            <InputSelect id="en-level" @bind-Value="_model.EnglishLevel">
+                @foreach (var level in Enum.GetValues<EnglishLevel>())
+                {
+                    <option value="@level">@level</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="field">
+            <label for="location">Location</label>
+            <InputText id="location" @bind-Value="_model.Location" />
+        </div>
+
+        <div class="field">
+            <label for="summary">Summary</label>
+            <InputTextArea id="summary" rows="4" @bind-Value="_model.Summary" />
+        </div>
+
+        <button type="submit" disabled="@_isSaving">@(_isSaving ? "Saving..." : "Save")</button>
+    </EditForm>
+
+    @if (_savedMessage is not null)
+    {
+        <p>@_savedMessage</p>
+    }
+}
+
+@code {
+    private sealed class ProfileFormModel
+    {
+        public string FullName { get; set; } = string.Empty;
+        public string TechStackCsv { get; set; } = string.Empty;
+        public int YearsOfExperience { get; set; }
+        public JapaneseLevel JapaneseLevel { get; set; }
+        public EnglishLevel EnglishLevel { get; set; }
+        public string Location { get; set; } = string.Empty;
+        public string Summary { get; set; } = string.Empty;
+    }
+
+    private ProfileFormModel? _model;
+    private bool _isSaving;
+    private string? _savedMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var profile = await ProfileStore.LoadAsync();
+
+        _model = new ProfileFormModel
+        {
+            FullName = profile.FullName,
+            TechStackCsv = string.Join(", ", profile.TechStack),
+            YearsOfExperience = profile.YearsOfExperience,
+            JapaneseLevel = profile.JapaneseLevel,
+            EnglishLevel = profile.EnglishLevel,
+            Location = profile.Location,
+            Summary = profile.Summary
+        };
+    }
+
+    private async Task SaveAsync()
+    {
+        if (_model is null)
+        {
+            return;
+        }
+
+        _isSaving = true;
+        _savedMessage = null;
+
+        var techStack = _model.TechStackCsv
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToList();
+
+        var profile = new UserProfile(
+            FullName: _model.FullName,
+            TechStack: techStack,
+            YearsOfExperience: _model.YearsOfExperience,
+            JapaneseLevel: _model.JapaneseLevel,
+            EnglishLevel: _model.EnglishLevel,
+            Location: _model.Location,
+            Summary: _model.Summary);
+
+        await ProfileStore.SaveAsync(profile);
+
+        _isSaving = false;
+        _savedMessage = "Profile saved.";
+    }
+}

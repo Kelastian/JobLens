@@ -71,8 +71,10 @@ Store it as an editable JSON file so any user can adapt it to themselves.
   a separate JS build pipeline for this project.
 - **Input: paste text OR paste URL** (URL scraping is in scope from day one).
 - **Persistence: SQLite via Entity Framework Core** — zero setup, single file, portable.
-- **LLM provider: Google Gemini 2.5 Flash** as primary (1M-token context, native Japanese,
-  free tier ~1,500 req/day, no credit card).
+- **LLM provider: Google Gemini 3.5 Flash** as primary (1M-token context, native Japanese,
+  free tier, no credit card). Originally planned as 2.5 Flash, but that model returned
+  404 "no longer available to new users" when verified against the real API — see
+  Llm.notas.md for the verification and the model list query that confirmed 3.5 Flash.
   - **Fallback: Groq (Llama 3.3 70B)**, wired behind the same interface. If Gemini fails or
     hits rate limits, JobLens automatically retries via Groq. This is a *design decision worth
     demonstrating*, not just resilience for its own sake.
@@ -172,7 +174,7 @@ only comments. **Do not change behavior between branches.**
 - **Architecture** section: short explanation of each layer + a dependency diagram
   (ASCII or mermaid).
 - **Design decisions** section — the part reviewers actually read. Cover:
-  - Why Gemini 2.5 Flash as primary (1M context, native JA, free tier).
+  - Why Gemini 3.5 Flash as primary (1M context, native JA, free tier).
   - Why a fallback provider at all, and how the interface makes it swappable.
   - Why structured JSON output with schema validation instead of parsing free text.
   - How prompts are built per-language (and why prompts are not scattered strings).

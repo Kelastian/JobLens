@@ -13,4 +13,8 @@
     <UserSecretsId>64f3eb51-f797-4363-8bb9-789eb2870f0a</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="profile.default.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
