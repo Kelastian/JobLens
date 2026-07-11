@@ -3,6 +3,9 @@
 # NO deben subir a GitHub (el repo público está en inglés).
 *.notas.md
 
+# ---- Brief/plan del proyecto (uso interno, no para el repo público) ----
+CLAUDE.md
+
 # ---- .NET / Visual Studio standard ----
 bin/
 obj/
