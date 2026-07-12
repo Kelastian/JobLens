@@ -1,6 +1,3 @@
-# ---- JobLens: notas privadas (español, estilo profesor) ----
-# Explican el "cómo" y el "porqué" de cada archivo/grupo pero
-# NO deben subir a GitHub (el repo público está en inglés).
 *.notas.md
 
 # ---- Brief/plan del proyecto (uso interno, no para el repo público) ----
